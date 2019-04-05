@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+      <h1>Signup</h1>
+      <form action="/" method="post">
+        <label for="username">
+            Username
+            <input type="text" id="username" name="username" value="{{ old_username }}" /> {{ u_error }}
+        </label> 
+        <br></br>
+        <label for="password">
+            Password
+            <input type="password" id="password" name="password" /> {{p_error}}
+        </label>
+        <br></br>
+        <label for="verify_password">
+            Verify Password
+            <input type="password" id="verify_password" name="verify_password" /> {{pv_error}}
+        </label>
+        <br></br>
+        <label for="email">
+            Email (optional)
+            <input type="text" id="email" name="email" value="{{ old_email }}" />{{e_error}}
+        </label>
+        <br></br>
+        <input type="submit" value="Submit"/>
+      </form>
+    </body>
+</html>
