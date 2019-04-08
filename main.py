@@ -26,7 +26,7 @@ def validity(u, p, pv, e):
                 dots += 1
             else:
                 continue
-        if ats or dots != 1:
+        if ats != 1 or dots != 1:
             e_error_msg = "Invalid email"
         if " " in e or len(e) < 3 or len(e) > 20:
             e_error_msg = "Invalid email"
@@ -37,8 +37,10 @@ def validity(u, p, pv, e):
     if pv == "":
         pv_error_msg = "Field cannot be blank"
     
-    if u_error_msg and p_error_msg and pv_error_msg and e_error_msg == "":
-        allvalid = 3
+    if u_error_msg == "" and p_error_msg == "" and pv_error_msg == "" and e_error_msg == "":
+        allvalid = True
+    else:
+        allvalid = False
 
     return u_error_msg, p_error_msg, pv_error_msg, e_error_msg, allvalid
 
@@ -58,15 +60,17 @@ def validate():
 
     complete = errors[4]
 
-    if complete == 3:    #local variable allvalid referenced before assignment
-        return redirect("/welcome" + u_input)
+    if complete == True:    #local variable allvalid referenced before assignment
+        return redirect('/welcome?username={0}'.format(u_input))
 
     return render_template("index.html", old_username = u_input, old_email = e_input, u_error = u_error_msg, p_error = p_error_msg, pv_error = pv_error_msg, e_error = e_error_msg)
 
 
 @app.route("/welcome")
 def welcome():
-    return render_template("welcome.html", username = u_input)
+    u = request.args.get('username')
+
+    return render_template("welcome.html", username = u)
 
 @app.route("/")      #testinghall on repl.it has test code
 def index():
